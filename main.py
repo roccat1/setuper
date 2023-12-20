@@ -1,4 +1,4 @@
-import json, os
+import json, os, sys
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
@@ -34,6 +34,14 @@ if __name__ == '__main__':
     main() 
     print('done')
 '''
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 #function to read a file
 def readFile(filename):
@@ -167,7 +175,7 @@ def main():
     )
 
     button_image_1 = tk.PhotoImage(
-        file=os.path.join(os.getcwd(), "assets\\frame0\\browseFolder.png"))
+        file=resource_path("assets\\frame0\\browseFolder.png"))
     button_1 = tk.Button(
         image=button_image_1,
         borderwidth=0,
@@ -183,7 +191,7 @@ def main():
     )
 
     button_image_2 = tk.PhotoImage(
-        file=os.path.join(os.getcwd(), "assets\\frame0\\run.png"))
+        file=resource_path("assets\\frame0\\run.png"))
     button_2 = tk.Button(
         image=button_image_2,
         borderwidth=0,
@@ -199,7 +207,7 @@ def main():
     )
 
     button_image_3 = tk.PhotoImage(
-        file=os.path.join(os.getcwd(), "assets\\frame0\\exit.png"))
+        file=resource_path("assets\\frame0\\exit.png"))
     button_3 = tk.Button(
         image=button_image_3,
         borderwidth=0,
