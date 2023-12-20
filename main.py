@@ -1,7 +1,7 @@
 import json, os
 import tkinter as tk
-from tkinter import ttk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
+
 
 output = '''
 # -*- coding: utf-8 -*-
@@ -32,6 +32,7 @@ def main():
 
 if __name__ == '__main__':
     main() 
+    print('done')
 '''
 
 #function to read a file
@@ -85,20 +86,35 @@ def loadDir(path, data):
 def browseFolders():
     global filename
     filename = filedialog.askdirectory()
+    label_file_explorer.configure(text="Folder Opened: "+filename)
 
 def setupIt():
     global filename, output
-    print(filename)
+
+    print('setting up...')
+
+    try:
+        filename
+    except NameError:
+        print('no folder selected')
+        label_file_explorer.configure(text="no folder selected")
+        return
+
     dirName= os.path.basename(filename)
     output=output.replace("@!*_*!@dirName@!*_*!@", '"'+dirName+'"')
 
-    print(os.path.join(filename))
     savedDir = saveDir(os.path.join(filename))
     output=output.replace("@!*_*!@savedDir@!*_*!@", str(savedDir))
 
     with open(os.path.join('setup.py'), 'w') as f: f.write(output.encode('UTF-8').decode('UTF-8'))
 
+    print(str(os.path.basename(filename)), 'has been set up')
+    label_file_explorer.configure(text=str(os.path.basename(filename))+" has been set up")
+    messagebox.showinfo(str(os.path.basename(filename))+" has been set up")
+
 def main():
+    global label_file_explorer
+
     window = tk.Tk()
     window.title('setuper')
     window.geometry("700x300")
@@ -134,5 +150,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#os.path.join('usr', 'bin', 'spam')
