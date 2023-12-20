@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import filedialog
 
 output = '''
+# -*- coding: utf-8 -*-
 #executable created by Roc Rodríguez Arumí (https://github.com/roccat1)
 import json, os
 
@@ -23,7 +24,7 @@ def loadDir(path, data):
             os.makedirs(os.path.join(path, root, dir), exist_ok=True)
         #create files
         for file in files:
-            writeFile(os.path.join(path, root, file[0]), file[1].encode('ISO-8859-1'))
+            writeFile(os.path.join(path, root, file[0]), file[1])
 
 def main():
     os.makedirs(@!*_*!@dirName@!*_*!@, exist_ok=True)
@@ -65,7 +66,7 @@ def saveDir(path):
         filesResult = []
         #save files
         for file in files:
-            filesResult.append([file, readFile(os.path.join(root, file)).decode('ISO-8859-1')])
+            filesResult.append([file, readFile(os.path.join(root, file))])
         result.append([root.replace(path, ''), dirs, filesResult])
 
     return result
@@ -79,7 +80,7 @@ def loadDir(path, data):
             os.makedirs(os.path.join(path, root, dir), exist_ok=True)
         #create files
         for file in files:
-            writeFile(os.path.join(path, root, file[0]), file[1].encode('ISO-8859-1'))
+            writeFile(os.path.join(path, root, file[0]), file[1])
 
 def browseFolders():
     global filename
@@ -95,7 +96,7 @@ def setupIt():
     savedDir = saveDir(os.path.join(filename))
     output=output.replace("@!*_*!@savedDir@!*_*!@", str(savedDir))
 
-    with open(os.path.join('setup.py'), 'w') as f: f.write(output.encode("utf-8").decode("latin-1"))
+    with open(os.path.join('setup.py'), 'w') as f: f.write(output.encode('UTF-8').decode('UTF-8'))
 
 def main():
     window = tk.Tk()
