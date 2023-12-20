@@ -86,7 +86,7 @@ def loadDir(path, data):
 def browseFolders():
     global filename
     filename = filedialog.askdirectory()
-    label_file_explorer.configure(text="Folder Opened: "+filename)
+    canvas.itemconfig(textMod, text="Folder Opened: "+os.path.basename(filename))
 
 def setupIt():
     global filename, output
@@ -97,7 +97,7 @@ def setupIt():
         filename
     except NameError:
         print('no folder selected')
-        label_file_explorer.configure(text="no folder selected")
+        canvas.itemconfig(textMod, text="No folder selected")
         return
 
     dirName= os.path.basename(filename)
@@ -109,44 +109,113 @@ def setupIt():
     with open(os.path.join('setup.py'), 'w') as f: f.write(output.encode('UTF-8').decode('UTF-8'))
 
     print(str(os.path.basename(filename)), 'has been set up')
-    label_file_explorer.configure(text=str(os.path.basename(filename))+" has been set up")
-    messagebox.showinfo(str(os.path.basename(filename))+" has been set up")
+    canvas.itemconfig(textMod, text=str(os.path.basename(filename))+" has been set up")
+    messagebox.showinfo("Done!", str(os.path.basename(filename))+" has been set up")
 
 def main():
-    global label_file_explorer
+    global canvas, textMod
 
     window = tk.Tk()
-    window.title('setuper')
-    window.geometry("700x300")
-    window.config(background = "white")
 
-    label_file_explorer = tk.Label(window, 
-							text = "choose the folder to be converted to an executable",
-							width = 100, height = 4, 
-							fg = "blue")
+    window.geometry("640x480")
+    window.configure(bg = "#C8EABC")
 
-    button_explore = tk.Button(window, 
-						text = "Browse Folder",
-						command = browseFolders) 
-    
-    button_run = tk.Button(window, 
-						text = "Run program",
-						command = setupIt) 
-    
-    button_exit = tk.Button(window, 
-					text = "Exit",
-					command = exit) 
 
-    label_file_explorer.grid(column = 1, row = 1)
+    canvas = tk.Canvas(
+        window,
+        bg = "#C8EABC",
+        height = 480,
+        width = 640,
+        bd = 0,
+        highlightthickness = 0,
+        relief = "ridge"
+    )
 
-    button_explore.grid(column = 1, row = 2)
+    canvas.place(x = 0, y = 0)
+    canvas.create_rectangle(
+        0.0,
+        131.0,
+        104.0,
+        469.0,
+        fill="#C8EABC",
+        outline="")
 
-    button_run.grid(column = 1, row = 3)
+    canvas.create_rectangle(
+        0.0,
+        0.0,
+        640.0,
+        118.0,
+        fill="#B5E4FF",
+        outline="")
 
-    button_exit.grid(column = 1,row = 4)
+    canvas.create_text(
+        167.0,
+        13.0,
+        anchor="nw",
+        text="Welcome to Setuper",
+        fill="#000000",
+        font=("Inter", 32 * -1)
+    )
 
-    # Let the window wait for any events
+    textMod = canvas.create_text(
+        10.0,
+        66.0,
+        anchor="nw",
+        text="Choose Folder",
+        fill="#000000",
+        font=("Inter", 30 * -1)
+    )
+
+    button_image_1 = tk.PhotoImage(
+        file=os.path.join(os.getcwd(), "assets\\frame0\\browseFolder.png"))
+    button_1 = tk.Button(
+        image=button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=browseFolders,
+        relief="flat"
+    )
+    button_1.place(
+        x=21.0,
+        y=140.0,
+        width=598.0,
+        height=80.0
+    )
+
+    button_image_2 = tk.PhotoImage(
+        file=os.path.join(os.getcwd(), "assets\\frame0\\run.png"))
+    button_2 = tk.Button(
+        image=button_image_2,
+        borderwidth=0,
+        highlightthickness=0,
+        command=setupIt,
+        relief="flat"
+    )
+    button_2.place(
+        x=21.0,
+        y=249.0,
+        width=599.0,
+        height=80.0
+    )
+
+    button_image_3 = tk.PhotoImage(
+        file=os.path.join(os.getcwd(), "assets\\frame0\\exit.png"))
+    button_3 = tk.Button(
+        image=button_image_3,
+        borderwidth=0,
+        highlightthickness=0,
+        command=exit,
+        relief="flat"
+    )
+    button_3.place(
+        x=21.0,
+        y=367.0,
+        width=599.0,
+        height=80.0
+    )
+    window.resizable(False, False)
     window.mainloop()
+
 
 if __name__ == '__main__':
     main()
