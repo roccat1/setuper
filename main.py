@@ -5,7 +5,7 @@ from tkinter import filedialog, messagebox
 
 output = '''
 # -*- coding: utf-8 -*-
-#executable created by Roc Rodríguez Arumí (https://github.com/roccat1)
+#executable created by Roc Rodriguez Arumi (https://github.com/roccat1)
 import json, os
 
 savedDir = @!*_*!@savedDir@!*_*!@
