@@ -114,7 +114,7 @@ def setupIt():
     savedDir = saveDir(os.path.join(filename))
     output=output.replace("@!*_*!@savedDir@!*_*!@", str(savedDir))
 
-    with open(os.path.join('setup.py'), 'w') as f: f.write(output.encode('UTF-8').decode('UTF-8'))
+    with open(os.path.join('setup_'+os.path.basename(filename)+'.py'), 'w') as f: f.write(output.encode('UTF-8').decode('UTF-8'))
 
     print(str(os.path.basename(filename)), 'has been set up')
     canvas.itemconfig(textMod, text=str(os.path.basename(filename))+" has been set up")
@@ -125,6 +125,8 @@ def main():
 
     window = tk.Tk()
 
+    window.title("Setuper")
+    window.iconbitmap(resource_path("assets\\icon.ico"))
     window.geometry("640x480")
     window.configure(bg = "#C8EABC")
 
